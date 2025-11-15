@@ -1,23 +1,24 @@
 name: Deploy
-
 on:
   push:
     branches: [main]
 
 permissions:
-  contents: write   # allow push to gh-pages
-  pages: write      # optional, useful if you switch to the new Pages API
-  id-token: write   # optional, for future Proof of association
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 20
       - run: npm ci
+      - run: |
+          echo "VITE_N8N_WEBHOOK_URL=${VITE_N8N_WEBHOOK_URL}" > .env
       - run: npm run build
       - uses: peaceiris/actions-gh-pages@v3
         with:
