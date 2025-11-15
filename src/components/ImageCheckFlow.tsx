@@ -489,7 +489,7 @@ const ImageCheckFlow = () => {
 
               {showHelpline && (
                 <div className="analysis-helpline">
-                  <span className="analysis-helpline__label">Tarvitsetko lisäapua?</span>
+                  <span className="analysis-helpline__label">Soita lähetyspalveluun:</span>
                   <a className="analysis-helpline__phone" href={`tel:${HELPLINE_TEL}`}>
                     Soita {HELPLINE_NUMBER}
                   </a>
