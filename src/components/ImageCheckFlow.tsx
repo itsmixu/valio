@@ -54,22 +54,6 @@ const toConfidence = (value: unknown): number => {
   return 0
 }
 
-const toStringArray = (value: unknown): string[] => {
-  if (Array.isArray(value)) {
-    return value
-      .map((item) => (typeof item === 'string' ? item : String(item)))
-      .map((item) => item.trim())
-      .filter(Boolean)
-  }
-  if (typeof value === 'string') {
-    return value
-      .split(/[\n,]/)
-      .map((item) => item.trim())
-      .filter(Boolean)
-  }
-  return []
-}
-
 const unwrapPayload = (value: unknown): Record<string, unknown> => {
   if (Array.isArray(value)) {
     for (const entry of value) {
@@ -109,39 +93,11 @@ const normalizeToAnalysis = (payload: unknown): AnalysisResult => {
     }
   }
 
-  const missingCandidates = [
-    working.missingItems,
-    working.itemsMissing,
-    working.missing,
-    working.missing_items,
-    working.flags,
-  ]
-
-  let missingItems: string[] = []
-  outer: for (const candidate of missingCandidates) {
-    if (!candidate) continue
-
-    if (typeof candidate === 'object' && candidate !== null) {
-      const record = candidate as Record<string, unknown>
-      const nestedKeys = ['items', 'missingItems', 'itemsMissing', 'missing']
-      for (const key of nestedKeys) {
-        const nestedItems = toStringArray(record[key])
-        if (nestedItems.length) {
-          missingItems = nestedItems
-          break outer
-        }
-      }
-    }
-
-    const parsed = toStringArray(candidate)
-    if (parsed.length) {
-      missingItems = parsed
-      break
-    }
-  }
-
   const confidenceFields = [
     working.confidence,
+    working.confidenceThatPictureIsShipment,
+    working.confidence_that_picture_is_shipment,
+    working.confidencePictureShipment,
     working.confidenceScore,
     working.score,
     working.probability,
@@ -194,7 +150,7 @@ const normalizeToAnalysis = (payload: unknown): AnalysisResult => {
 
   return {
     looksLikeShipment,
-    missingItems,
+    missingItems: [],
     confidence,
     summary,
     notes,
@@ -441,17 +397,6 @@ const ImageCheckFlow = () => {
             )}
 
             <div className="image-flow__actions">
-              {stage === 'collect' && (
-                <button
-                  type="button"
-                  className="support-button"
-                  onClick={whenReadySelect}
-                  disabled={isAnalyzing}
-                >
-                  Lataa kuva
-                </button>
-              )}
-
               {stage === 'error' && (
                 <>
                   {imageFile && (
@@ -498,7 +443,7 @@ const ImageCheckFlow = () => {
               {isAnalyzing && (
                 <div className="image-flow__status">
                   <span className="status-dot" />
-                  Analysoidaan kuvaa OpenAI Visionilla…
+                  Tarkistetaan kuvaa…
                 </div>
               )}
 
@@ -514,11 +459,6 @@ const ImageCheckFlow = () => {
             <div className="image-flow__message is-error">
               <strong>Tapahtui virhe.</strong>
               <span>{error}</span>
-              {!isAnalyzing && (
-                <button type="button" className="button-link" onClick={resetFlow}>
-                  Yritä uudelleen
-                </button>
-              )}
             </div>
           )}
 

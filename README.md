@@ -1,57 +1,20 @@
-# Valio Support Vision App
+# Valio Support Vision – Junction 2025
 
-Sleek customer-support portal that validates shipment photos with OpenAI Vision via an n8n webhook before routing customers to the helpline.
+Valio Aimo’s Junction 2025 project delivers a calm, human-facing support portal that combines computer vision with instant escalation options. Customers upload their shipment photo, the site forwards it to an n8n workflow powered by OpenAI Vision, and the interface responds with a concise Finnish-language assessment plus a high-confidence helpline prompt when escalation is warranted.
 
-## Getting Started
+## Experience flow
 
-1. Install dependencies:
-   ```sh
-   npm install
-   ```
-2. Copy the example environment file and add your webhook URL:
-   ```sh
-   cp .env.example .env
-   ```
-   - `VITE_N8N_WEBHOOK_URL` should point to your n8n workflow that wraps the OpenAI Vision API.
-3. Run the dev server:
-   ```sh
-   npm run dev
-   ```
+- **Hero onboarding** – A brand-focused introduction that explains the AI-assisted photo check in plain Finnish.
+- **Intuitive upload** – Drag-and-drop or browse for a shipment image. The UI guides acceptable formats, enforces size limits, and previews the selected file.
+- **Real-time analysis** – While the n8n workflow runs, the status banner shows progress (“Tarkistetaan kuvaa…”). Results surface as a single AI comment with optional notes, keeping the message clear for logistics staff.
+- **Escalation-ready** – When the model is confident the shipment is real and identifies issues, a highlighted call-to-action reveals the dedicated Valio helpline (`+358 45 49 11233`) for instant follow-up.
 
-## n8n Webhook Contract
+## Technical outline
 
-The React app posts a multipart request that only contains the uploaded shipment photo:
+- **Frontend** – Vite + React + TypeScript with a light Finnish theme, responsive layouts, and animated gradients.
+- **AI backend** – n8n webhook receives the image, orchestrates OpenAI Vision prompts, and returns structured JSON that the UI renders.
+- **Data contract** – The workflow replies with keys such as `looksLikeShipment`, `confidenceThatPictureIsShipment`, `summary`, and optional `notes`, which the interface normalizes and displays.
 
-- `file`: the shipment image (`File`)
+## Event context
 
-Handle prompts, metadata, and any additional context inside your n8n workflow. The workflow should call the OpenAI Vision model, decide how to phrase the question, and finally respond with JSON shaped like:
-
-```json
-{
-  "looksLikeShipment": true,
-  "missingItems": ["Packing slip"],
-  "confidence": 0.82,
-  "summary": "The palette shows all labelled boxes and appears complete.",
-  "notes": "Escalate only if labels do not match manifest."
-}
-```
-
-Fields:
-
-- `looksLikeShipment` (boolean) — whether the AI confirms it’s a shipment photo.
-- `missingItems` (string[]) — list items the AI thinks are missing (empty if none).
-- `confidence` (number 0–1) — normalized confidence score.
-- `summary` (string) — single-paragraph human-readable explanation.
-- `notes` (string, optional) — extra context or escalation guidance.
-
-Additional keys are ignored, but missing fields fall back to safe defaults. Confidence ≥ 0.7 reveals the helpline number in the UI.
-
-## Production Build
-
-To create a production bundle:
-
-```sh
-npm run build
-```
-
-Then serve `dist/` with your preferred static host.
+This site was crafted for **Junction 2025** to demonstrate how Valio Aimo can streamline customer support for logistics anomalies by pairing AI vision checks with trusted human escalation paths. It is designed for live demos, investor walkthroughs, and hackathon judging, focusing on clarity, accessibility, and rapid troubleshooting. It's project created by Mikko Hurme and you can't take it. 

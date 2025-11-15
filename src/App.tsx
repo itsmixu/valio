@@ -17,9 +17,7 @@ function App() {
             sinut oikealle tukikanavalle hetkessä.
           </p>
         </div>
-      </section>
 
-      <main className="support-main">
         <section className="support-panel">
           <header>
             <h2 className="support-panel__title">Lähetyskuvan tarkistus</h2>
@@ -28,7 +26,7 @@ function App() {
 
           <ImageCheckFlow />
         </section>
-      </main>
+      </section>
     </div>
   )
 }
