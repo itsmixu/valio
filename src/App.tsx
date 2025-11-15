@@ -12,9 +12,8 @@ function App() {
             Nopea apu lähetysongelmiin
           </h1>
           <p className="support-hero__text">
-            Lataa kuva lähetyksestä ja anna tekoälyavustajamme tarkistaa se ennen
-            yhteyttä asiantuntijoihin. Nostamme puuttuvat tuotteet esiin ja ohjaamme
-            sinut oikealle tukikanavalle hetkessä.
+            Tarkistamme lähetyskuvasi automaattisesti ennen kuin näytämme
+            palvelunumeron. Saat nopean vahvistuksen ja tarvittaessa suoran yhteyden tukeen.
           </p>
         </div>
 
