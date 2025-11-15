@@ -12,9 +12,13 @@
 }
 
 .support-hero {
+  flex: 1;
+  width: 100%;
   padding: 48px 56px 48px;
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 32px;
   background: linear-gradient(135deg, rgba(227, 240, 255, 0.75), rgba(255, 255, 255, 0.4));
   text-align: center;
@@ -56,7 +60,7 @@
   gap: 20px;
   text-align: center;
   align-items: center;
-  width: min(100%, 640px);
+  width: min(100%, 720px);
 }
 
 .support-panel__title {
@@ -449,10 +453,8 @@
 
   .support-hero {
     padding: 36px 24px 28px;
-  }
-
-  .support-main {
-    padding: 0 24px 32px;
+    justify-content: flex-start;
+    gap: 28px;
   }
 
   .image-flow__card {
