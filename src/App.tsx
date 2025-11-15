@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import brandLogo from './assets/valio-aimo-logo.svg'
+import ImageCheckFlow from './components/ImageCheckFlow'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app-shell">
+      <section className="support-hero">
+        <img src={brandLogo} alt="Valio Aimo" className="support-hero__brandmark" />
+        <div className="support-hero__brand">
+          <h1 className="support-hero__heading">
+            Nopea apu lähetysongelmiin
+          </h1>
+          <p className="support-hero__text">
+            Lataa kuva lähetyksestä ja anna tekoälyavustajamme tarkistaa se ennen
+            yhteyttä asiantuntijoihin. Nostamme puuttuvat tuotteet esiin ja ohjaamme
+            sinut oikealle tukikanavalle hetkessä.
+          </p>
+        </div>
+      </section>
+
+      <main className="support-main">
+        <section className="support-panel">
+          <header>
+            <h2 className="support-panel__title">Lähetyskuvan tarkistus</h2>
+            <p>Saat ohjatun avun: tarkistamme kuvasi ja kerromme jatkotoimet.</p>
+          </header>
+
+          <ImageCheckFlow />
+        </section>
+      </main>
+    </div>
   )
 }
 
