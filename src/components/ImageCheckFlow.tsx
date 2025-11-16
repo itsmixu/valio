@@ -455,12 +455,6 @@ const ImageCheckFlow = () => {
                 <p className="analysis-summary">{analysis.summary}</p>
               </div>
 
-              {analysis.notes && (
-                <p className="analysis-notes">
-                  {analysis.notes}
-                </p>
-              )}
-
               {showHelpline && (
                 <div className="analysis-helpline">
                   <span className="analysis-helpline__label">Soita lähetyspalveluun:</span>

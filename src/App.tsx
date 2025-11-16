@@ -19,7 +19,7 @@ function App() {
         <section className="support-panel">
           <header>
             <h2 className="support-panel__title">Lähetyskuvan tarkistus</h2>
-            <p>Ennen kuin voit ottaa yhteyttä, ota selkä kuva lähetyksestäsi jossa selkeästi näkyy puuttuvia tuotteita.</p>
+            <p>Ennen kuin voit ottaa yhteyttä, ota kuva lähetyksestäsi jossa näkyy puuttuvia tuotteita.</p>
           </header>
 
           <ImageCheckFlow />
