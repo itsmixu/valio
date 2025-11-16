@@ -17,4 +17,4 @@ Valio Aimo’s Junction 2025 project delivers a calm, human-facing support porta
 
 ## Event context
 
-This site was crafted for **Junction 2025** to demonstrate how Valio Aimo can streamline customer support for logistics anomalies by pairing AI vision checks with trusted human escalation paths. It is designed for live demos, investor walkthroughs, and hackathon judging, focusing on clarity, accessibility, and rapid troubleshooting. It's project created by Mikko Hurme and you can't take it. 
+This site was crafted for **Junction 2025** to demonstrate how Valio Aimo can streamline customer support for logistics anomalies by pairing AI vision checks with trusted human escalation paths. It is designed for live demos, investor walkthroughs, and hackathon judging, focusing on clarity, accessibility, and rapid troubleshooting.
