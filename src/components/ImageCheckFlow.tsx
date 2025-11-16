@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-type Stage = 'idle' | 'collect' | 'ready' | 'analyzing' | 'result' | 'error'
+type Stage = 'collect' | 'analyzing' | 'result' | 'error'
 
 export type AnalysisResult = {
   looksLikeShipment: boolean
@@ -212,7 +212,7 @@ const requestAnalysis = async (file: File): Promise<AnalysisResult> => {
 }
 
 const ImageCheckFlow = () => {
-  const [stage, setStage] = useState<Stage>('idle')
+  const [stage, setStage] = useState<Stage>('collect')
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
@@ -253,11 +253,6 @@ const ImageCheckFlow = () => {
     return null
   }
 
-  const handleStart = () => {
-    setStage('collect')
-    setError(null)
-  }
-
   const handleFileSelection = (list: FileList | null) => {
     const incomingFile = list?.item(0)
     if (!incomingFile) return
@@ -274,7 +269,7 @@ const ImageCheckFlow = () => {
     setImageFile(incomingFile)
     setAnalysis(null)
     setError(null)
-    setStage('ready')
+    void analyzeFile(incomingFile)
   }
 
   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -310,14 +305,13 @@ const ImageCheckFlow = () => {
     setStage('collect')
   }
 
-  const handleAnalyze = async () => {
-    if (!imageFile) return
+  const analyzeFile = async (file: File) => {
     setStage('analyzing')
     setError(null)
     setAnalysis(null)
 
     try {
-      const result = await requestAnalysis(imageFile)
+      const result = await requestAnalysis(file)
       setAnalysis(result)
       setStage('result')
     } catch (analysisError) {
@@ -331,17 +325,17 @@ const ImageCheckFlow = () => {
     }
   }
 
+  const handleAnalyze = async () => {
+    if (!imageFile) return
+    await analyzeFile(imageFile)
+  }
+
   const showHelpline =
     analysis?.looksLikeShipment && (analysis?.confidence ?? 0) >= CONFIDENCE_THRESHOLD
 
   return (
     <div className="image-flow">
-      {stage === 'idle' ? (
-        <button type="button" className="support-button" onClick={handleStart}>
-          Käynnistä kuvantarkistus
-        </button>
-      ) : (
-        <div className="image-flow__card">
+      <div className="image-flow__card">
           <label
             htmlFor="shipment-upload"
             className={[
@@ -411,29 +405,9 @@ const ImageCheckFlow = () => {
                   )}
                   <button
                     type="button"
-                    className={imageFile ? 'button-secondary' : 'support-button'}
-                    onClick={whenReadySelect}
-                    disabled={isAnalyzing}
-                  >
-                    {imageFile ? 'Valitse toinen' : 'Lataa kuva'}
-                  </button>
-                </>
-              )}
-
-              {stage === 'ready' && (
-                <>
-                  <button
-                    type="button"
-                    className="support-button"
-                    onClick={handleAnalyze}
-                    disabled={!imageFile}
-                  >
-                    Käynnistä AI-tarkistus
-                  </button>
-                  <button
-                    type="button"
                     className="button-secondary"
                     onClick={whenReadySelect}
+                    disabled={isAnalyzing}
                   >
                     Valitse toinen
                   </button>
@@ -497,8 +471,7 @@ const ImageCheckFlow = () => {
               )}
             </section>
           )}
-        </div>
-      )}
+      </div>
     </div>
   )
 }

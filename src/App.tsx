@@ -12,15 +12,14 @@ function App() {
             Nopea apu lähetysongelmiin
           </h1>
           <p className="support-hero__text">
-            Tarkistamme lähetyskuvasi automaattisesti ennen kuin näytämme
-            palvelunumeron. Saat nopean vahvistuksen ja tarvittaessa suoran yhteyden tukeen.
+            Valion Uusi AI-palvelu jolla saat nopean vastauksen vuorokauden ympäri.
           </p>
         </div>
 
         <section className="support-panel">
           <header>
             <h2 className="support-panel__title">Lähetyskuvan tarkistus</h2>
-            <p>Saat ohjatun avun: tarkistamme kuvasi ja kerromme jatkotoimet.</p>
+            <p>Ennen kuin voit ottaa yhteyttä, ota selkä kuva lähetyksestäsi jossa selkeästi näkyy puuttuvia tuotteita.</p>
           </header>
 
           <ImageCheckFlow />
