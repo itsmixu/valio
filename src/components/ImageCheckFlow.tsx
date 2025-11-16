@@ -218,6 +218,7 @@ const ImageCheckFlow = () => {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [manualOverride, setManualOverride] = useState(false)
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const isAnalyzing = stage === 'analyzing'
@@ -302,6 +303,7 @@ const ImageCheckFlow = () => {
     setImageFile(null)
     setAnalysis(null)
     setError(null)
+    setManualOverride(false)
     setStage('collect')
   }
 
@@ -309,6 +311,7 @@ const ImageCheckFlow = () => {
     setStage('analyzing')
     setError(null)
     setAnalysis(null)
+    setManualOverride(false)
 
     try {
       const result = await requestAnalysis(file)
@@ -331,7 +334,24 @@ const ImageCheckFlow = () => {
   }
 
   const showHelpline =
-    analysis?.looksLikeShipment && (analysis?.confidence ?? 0) >= CONFIDENCE_THRESHOLD
+    manualOverride ||
+    (analysis?.looksLikeShipment && (analysis?.confidence ?? 0) >= CONFIDENCE_THRESHOLD)
+
+  const handleManualOverride = () => {
+    setIsDragging(false)
+    setImageFile(null)
+    setPreviewUrl(null)
+    setError(null)
+    setManualOverride(true)
+    setAnalysis({
+      looksLikeShipment: true,
+      missingItems: [],
+      confidence: 1,
+      summary: 'Kuvaa ei toimitettu. Siirryt suoraan lähetyspalvelun puhelintukeen.',
+      notes: undefined,
+    })
+    setStage('result')
+  }
 
   return (
     <div className="image-flow">
@@ -412,6 +432,16 @@ const ImageCheckFlow = () => {
                     Valitse toinen
                   </button>
                 </>
+              )}
+
+              {stage !== 'analyzing' && stage !== 'result' && (
+                <button
+                  type="button"
+                  className="button-link override-link"
+                  onClick={handleManualOverride}
+                >
+                  En voi toimittaa kuvaa
+                </button>
               )}
 
               {isAnalyzing && (

@@ -132,6 +132,11 @@
   text-decoration: underline;
 }
 
+.override-link {
+  font-size: 0.85rem;
+  color: rgba(24, 50, 75, 0.6);
+}
+
 .image-flow {
   display: flex;
   flex-direction: column;
