@@ -1,20 +1,11 @@
-# Valio Support Vision – Junction 2025
+## Valio Support Customer-facing website – part of our Junction 2025 project
 
-Valio Aimo’s Junction 2025 project delivers a calm, human-facing support portal that combines computer vision with instant escalation options. Customers upload their shipment photo, the site forwards it to an n8n workflow powered by OpenAI Vision, and the interface responds with a concise Finnish-language assessment plus a high-confidence helpline prompt when escalation is warranted.
+Our project had to help Valio Aimo in their shipping logistics. Particurlarly predicting outages, and reaching out if a product wouldn't make a shipment. Our project uses a custom ML-model for predicting product shortages and an ElevenLabs-powered helpline for automatically calling the customer if something they ordered would be missing. The agent would then arrange a replacement item, and update the product database. The same number could also be called to report missing items, and this website is part of that. There also is an admin panel website for overseeing the product database and seeing activity like recent calls and summaries of them. This was all powered by n8n, and as well as making this website I was working on the backend and most of the ElevenLabs integration.
 
-## Experience flow
+This website acts as a verification layer, before the helpline number is revealed. The customer submits a photo of their shipment which is sent to an OpenAI-vision model and it returns how confident it is that the photo has a shipment that's missing items. If it's confident, it reveals the helpline number to request replacements.
 
-- **Hero onboarding** – A brand-focused introduction that explains the AI-assisted photo check in plain Finnish.
-- **Intuitive upload** – Drag-and-drop or browse for a shipment image. The UI guides acceptable formats, enforces size limits, and previews the selected file.
-- **Real-time analysis** – While the n8n workflow runs, the status banner shows progress (“Tarkistetaan kuvaa…”). Results surface as a single AI comment with optional notes, keeping the message clear for logistics staff.
-- **Escalation-ready** – When the model is confident the shipment is real and identifies issues, a highlighted call-to-action reveals the dedicated Valio helpline (`+358 45 49 11233`) for instant follow-up.
+Our project ended up **finishing 5th** in the Valio Aimo Challenge, not bad considering most of our team were first-timers!
 
-## Technical outline
+### **Check out the other repos!**
 
-- **Frontend** – Vite + React + TypeScript with a light Finnish theme, responsive layouts, and animated gradients.
-- **AI backend** – n8n webhook receives the image, orchestrates OpenAI Vision prompts, and returns structured JSON that the UI renders.
-- **Data contract** – The workflow replies with keys such as `looksLikeShipment`, `confidenceThatPictureIsShipment`, `summary`, and optional `notes`, which the interface normalizes and displays.
-
-## Event context
-
-This site was crafted for **Junction 2025** to demonstrate how Valio Aimo can streamline customer support for logistics anomalies by pairing AI vision checks with trusted human escalation paths. It is designed for live demos, investor walkthroughs, and hackathon judging, focusing on clarity, accessibility, and rapid troubleshooting.
+[Prediction ML Model,](https://github.com/OtsoBear/Junction2025) [Admin panel](https://github.com/adiiexe/valio-admin)
